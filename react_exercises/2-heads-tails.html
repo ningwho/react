@@ -17,28 +17,34 @@ Make a coin flip application. Modify the code below so that when the "Flip the c
       constructor() {
         super();
         this.state = {
-          imageUrl: 'images/quarter-front.png'
-        };
+          side: "none"
+        }
       }
 
       flip() {
-        if (this.state.imageUrl === 'images/quarter-front.png'){
+        let gen = Math.random();
+        let value = ""
+        if(gen > 0.5){
+          value = "H"
+        }else{
+          value = "T"
+        }
         this.setState({
-          imageUrl: 'images/quarter-back.png'
-        });
-        }
-        else {
-          this.setState({
-            imageUrl: 'images/quarter-front.png'
-          });
-        }
+          side : value
+        })
       }
 
       render() {
+        let imageUrl = "";
+        if(this.state.side == "H"){
+          imageUrl = 'images/quarter-front.png'
+        }else if(this.state.side == "T"){
+          imageUrl = 'images/quarter-back.png'
+        }
         return (
           <div>
             <h1>Heads or Tails?</h1>
-            <img src={this.state.imageUrl}/>
+            <img src={imageUrl}/>
             <button onClick={() => this.flip()}>Flip the coin!</button>
           </div>
         );

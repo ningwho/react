@@ -27,24 +27,84 @@ Hints at the bottom of this file.
     <div id="root"></div>
     <script type="text/babel" data-presets="react">
 
+    class GameButtons extends React.Component {
+      render() {
+        return (
+          <div>
+            <button onClick={this.props.fight}>
+              Fight
+            </button>
+            <button onClick={this.props.flight}>
+              Flight
+            </button>
+          </div>
+        );
+      }
+    }
+
     class DragonGame extends React.Component {
+      constructor(){
+        super()
+        this.state ={
+          dragonHealth : 20,
+          heroHealth : 10
+        }
+      }
+      restart() {
+        this.setState({
+          dragonHealth : 20,
+          heroHealth : 10
+        });
+      }
+
+      fight(){
+        let flip = Math.floor(Math.random()*2)
+        if(flip === 0){
+          this.setState({
+            dragonHealth: this.state.dragonHealth - 5
+          })
+        } else{
+          this.setState({
+            heroHealth: this.state.heroHealth - 5
+          })
+        }
+      }
+
+      flight(){
+        this.setState({
+          heroHealth: this.state.heroHealth + 2
+        })
+      }
       render() {
         let message = '';
+        // let buttons = document.getElementsByTagName("button")
+        let gameOver = false;
+        let gameButtons = <GameButtons
+          fight={() => this.fight()}
+          flight={() => this.flight()}/>;
+        let playAgainButton = <button onClick={() => this.restart()}>
+          Play again
+        </button>;
+        if(this.state.heroHealth <=0){
+          message ='hero died'
+          gameOver = true;
+        }
+
+        if(this.state.dragonHealth <=0){
+          message = 'dragon died'
+          gameOver = true;
+        }
         return (
           <div>
             <img src="http://img10.deviantart.net/e984/i/2015/287/c/5/red_dragon_by_sandara-d6hpycs.jpg" width="400"/>
             <br/>
-            <label>Dragon: 20</label>&nbsp;
-            <label>Hero: 10</label>
+            <label>Dragon: {this.state.dragonHealth}</label>&nbsp;
+            <label>Hero: {this.state.heroHealth}</label>
             <br/>
             {message}
             <br/>
-            <button>
-              Fight
-            </button>
-            <button>
-              Flight
-            </button>
+            {gameOver ? null: gameButtons}
+            {gameOver ? playAgainButton : null}
           </div>
         );
       }

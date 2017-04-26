@@ -30,24 +30,55 @@ After making the previous and next buttons work, also list all the images in the
       constructor() {
         super();
         this.state = {
-          images: []
+          currentIndex: 0
         };
       }
       previous() {
-        if (this.state.images =)
+        let index = this.state.currentIndex - 1;
+        if (index < 0) {
+          index = images.length - 1;
+        }
+        this.setState({
+          currentIndex: index
+        });
       }
+
+      next() {
+        let index = this.state.currentIndex + 1;
+        if (index >= images.length) {
+          index = 0;
+        }
+        this.setState({
+          currentIndex: index
+        });
+
+      }
+
+      changeImage(index) {
+        this.setState({
+          currentIndex: index
+        })
+      }
+
       render() {
-        let currentImage = this.props.images[1];
+        let index = this.state.currentIndex;
+        let currentImage = this.props.images[index];
         return (
           <div>
-            <button>
+            <button onClick={() => this.previous()}>
               Previous
             </button>
-            <button>
+            {this.state.currentImage}
+            <button onClick={() => this.next()}>
               Next
             </button>
             <br/>
             <img src={currentImage}/>
+            <div>
+              {images.map((image, index) =>
+                <img onClick={() => this.changeImage(index)} key={index} src={image} height="68"/>
+              )}
+            </div>
           </div>
         );
       }

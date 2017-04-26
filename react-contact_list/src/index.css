@@ -1,0 +1,26 @@
+body {
+  text-align: center;
+  font-family: sans-serif;
+}
+form h1 {
+  text-align: center;
+}
+
+li {
+  list-style-type: none;
+}
+
+.form-group {
+  width: 250px;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-left: 40%;
+
+}
+
+
+
+form h1 {
+  text-align: center;
+
+}
